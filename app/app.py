@@ -50,7 +50,7 @@ st.sidebar.caption(
 )
 
 # ---------- Title ----------
-st.title("🌡️ NYC Climate Pulse")
+st.title("🌡️ NYC Climate Pulse!")
 st.write(f"Daily weather for the New York City region, {start}–{end}.")
 
 # ---------- Yearly summary table (one row per year) ----------
