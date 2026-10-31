@@ -3,7 +3,7 @@
 **How has New York City's weather changed since 1981?**
 This project pulls 45 years of daily weather data from NASA, cleans it, measures the warming trend, forecasts tomorrow's high, finds heat waves and droughts, and shows it all in a live dashboard.
 
-👉 **Live dashboard:** PASTE_YOUR_STREAMLIT_LINK_HERE
+👉 **Live dashboard:** (https://nyc-climate-pulse.streamlit.app)
 
 ![Screenshot of the NYC Climate Pulse dashboard](docs/images/dashboard.png)
 
@@ -35,9 +35,9 @@ nyc-climate-pulse/
 │   └── nyc_daily_1981_2025.csv   # the daily weather data
 ├── notebooks/                     # one notebook per sprint
 │   ├── 01_data_pull.ipynb         # download the data from NASA
-│   ├── 02_...                     # explore, clean, first charts
-│   ├── 03_...                     # warming trend and hot days
-│   ├── 04_...                     # forecast tomorrow's high
+│   ├── 02_explore.ipynb           # explore, clean, first charts
+│   ├── 03_trend.ipynb             # warming trend and hot days
+│   ├── 04_forecast.ipynb          # forecast tomorrow's high
 │   └── 05_anomalies.ipynb         # heat waves, droughts, unusual days
 ├── src/
 │   └── nasa_power.py              # reusable code to call the NASA API
