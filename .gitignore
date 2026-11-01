@@ -1,4 +1,6 @@
 .venv/
 __pycache__/
 .ipynb_checkpoints/
-.DS_Store
+.DS_Store.vscode/
+data/climate_models/
+data/nex_gddp_*.csv

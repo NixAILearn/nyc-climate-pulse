@@ -1,7 +1,7 @@
 🌡️ NYC Climate Pulse
-How has New York City's weather changed since 1981? This project pulls 45 years of daily weather data from NASA, cleans it, measures the warming trend, forecasts tomorrow's high, finds heat waves and droughts, and shows it all in a live dashboard.
+How has New York City's weather changed since 1981, and where is it heading? This project pulls 45 years of daily weather data from NASA, cleans it, measures the warming trend, forecasts tomorrow's high, finds heat waves and droughts, projects the climate to 2050 with climate models, and shows it all in a live dashboard that updates itself every day.
 
-👉 Live dashboard: (https://nyc-climate-pulse.streamlit.app)
+👉 Live dashboard: nyc-climate-pulse.streamlit.app
 
 Screenshot of the NYC Climate Pulse dashboard
 
@@ -14,7 +14,10 @@ Heat waves (3+ hot days in a row)	103 in total. They doubled, from 1.5 a year (1
 Worst drought	The 90 days ending Nov 18, 2024, with only 16% of normal rain
 Wettest / driest year	2018 / 2001
 Best forecast of tomorrow's high	Random forest, off by 3.20 °F on average
+What could the 2040s look like?	About +4.1 °F warmer than 1981–2010, with about 51 hot days a year (7 climate models)
 Average temperature each year with the warming trend line
+
+10-year average temperature with climate model projections to 2050
 
 The full story, with what each number means, is in docs/findings.md.
 
@@ -22,13 +25,16 @@ What's inside
 nyc-climate-pulse/
 ├── data/
 │   ├── nyc_daily_1981_2025.csv   # frozen 1981–2025 copy (the notebooks use this)
-│   └── nyc_daily_latest.csv      # updated every day by a robot (the dashboard uses this)
+│   ├── nyc_daily_latest.csv      # updated every day by a robot (the dashboard uses this)
+│   ├── future_2050_yearly.csv    # climate model projections, one row per year
+│   └── future_2050_summary.csv   # headline 2050 numbers for the dashboard
 ├── notebooks/                     # one notebook per sprint
 │   ├── 01_data_pull.ipynb         # download the data from NASA
 │   ├── 02_explore.ipynb           # explore, clean, first charts
 │   ├── 03_trend.ipynb             # warming trend and hot days
 │   ├── 04_forecast.ipynb          # forecast tomorrow's high
-│   └── 05_anomalies.ipynb         # heat waves, droughts, unusual days
+│   ├── 05_anomalies.ipynb         # heat waves, droughts, unusual days
+│   └── 09_future_2050.ipynb       # project the climate to 2050 with CMIP6 models
 ├── .github/workflows/
 │   └── refresh-data.yml           # tells GitHub to run update_data.py every day
 ├── src/
@@ -36,6 +42,8 @@ nyc-climate-pulse/
 │   └── update_data.py             # adds the newest days to nyc_daily_latest.csv
 ├── app/
 │   ├── app.py                     # the Streamlit dashboard
+│   ├── pages/
+│   │   └── 2_Future_2050.py       # the "Future 2050" dashboard page
 │   └── requirements.txt           # packages the online dashboard needs
 ├── docs/
 │   ├── findings.md                # the write-up
@@ -75,15 +83,18 @@ T2M_MAX	Daily high (°C)
 T2M_MIN	Daily low (°C)
 PRECTOTCORR	Rain and snow, as water (mm per day)
 RH2M	Relative humidity (%)
+Climate projections: 7 CMIP6 high-resolution climate models from the Open-Meteo Climate API (free, no API key). They follow a high-emissions path. I used each model's change since 1981–2010 and added it to the NASA history, so each model's own bias doesn't matter.
+
 Limits to keep in mind:
 
 NASA POWER is a model built from satellites and weather data, not a single thermometer. Each value covers a grid cell about 50 km wide, so it describes the NYC region, not a borough or a street. The city center is hotter than the grid average because of the urban heat island.
 Gridded data smooths out extremes. Real station highs (for example, Central Park) are often a few degrees hotter than the numbers here.
+Climate models get the statistics of a decade right, not the weather of a given day, so projections are 10-year averages. The 7 models disagree (the 2040s range from +2.8 to +4.5 °F), which is why I report the middle and the range.
 "Hot day" means a high at or above the 95th percentile of this dataset (about 81 °F). That is a relative threshold, not an official heat advisory.
 What I learned
-This was my first data project. Along the way I learned Python, pandas, matplotlib, scikit-learn, Jupyter, Streamlit, and Git/GitHub, working in seven small sprints:
+This was my first data project. Along the way I learned Python, pandas, matplotlib, scikit-learn, Jupyter, Streamlit, and Git/GitHub, working in small sprints:
 
-Setup · 1. First data pull · 2. Explore and clean · 3. Warming trend · 4. Forecast tomorrow's high · 5. Heat waves and droughts · 6. Dashboard · 7. README and write-up
+Setup · 1. First data pull · 2. Explore and clean · 3. Warming trend · 4. Forecast tomorrow's high · 5. Heat waves and droughts · 6. Dashboard · 7. README and write-up · 8. Automatic daily data updates · 9. Projecting to 2050
 Ideas for later
 Part 2: neighborhood heat islands, using Landsat satellite images and the NYC street tree census.
 Compare against the Central Park weather station.
