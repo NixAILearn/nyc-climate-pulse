@@ -51,6 +51,21 @@ I compared rain over each 90-day window with what is normal for that time of yea
 
 An **IsolationForest** model (it looks for days that don't fit the usual patterns) mostly flagged the very wet stretches of **2018 and 2019**, when rain was about **214% of normal**. Unusual wetness, not only heat, is part of the region's recent weather.
 
+## 7. Looking ahead to 2050
+
+I compared 7 CMIP6 climate models (a high-emissions path) with the NASA history,
+using each model's *change* since 1981–2010 so its own bias doesn't matter.
+
+- By the 2040s, the region's average temperature could be about **57.2 °F**,
+  **+4.1 °F** warmer than 1981–2010 (models range from +2.8 to +4.5 °F).
+- Hot days (a high of 81 °F or more) could rise to about **51 a year**
+  (models range from 39 to 66), compared with 16 in 1981–2010 and 24 in 2016–2025.
+- Simply extending the 1981–2025 straight line gives 56.4 °F for the 2040s, which is
+  lower than the models by 0.8 °F. The models expect warming to speed up compared
+  with the past 45 years.
+- By 2050 a middle-emissions path is only slightly cooler; the paths split mostly
+  after 2050 (IPCC AR6).
+
 ## Takeaways
 
 1. NYC's region is warming steadily, about 0.64 °F every ten years.
