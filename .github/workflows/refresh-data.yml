@@ -1,0 +1,40 @@
+# Sprint 8: download the newest NASA POWER days every morning and commit them.
+name: Refresh NASA data
+
+on:
+  schedule:
+    - cron: "0 12 * * *"   # every day at 12:00 UTC (8 AM in New York in summer)
+  workflow_dispatch:        # adds a "Run workflow" button so you can run it by hand
+
+permissions:
+  contents: write           # lets the robot push a commit to your repo
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get a copy of the repo
+        uses: actions/checkout@v4
+
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install packages
+        run: pip install pandas requests
+
+      - name: Download the newest days
+        run: python src/update_data.py
+
+      - name: Commit the new data (only if something changed)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/nyc_daily_latest.csv
+          if git diff --staged --quiet; then
+            echo "No new data today."
+          else
+            git commit -m "Daily data refresh: $(date -u +%Y-%m-%d)"
+            git push
+          fi
